@@ -1,5 +1,21 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-<h1>Index</h1>
-<p>That's right. We out here.</p>
+{% if board %}
+<h1>Flask Boggle</h1>
+<div class="container w-25 mt-5">
+    {% for row in board %}
+    <div class="row">
+        {% for piece in row %}
+        <div class="col border">
+            <span>{{piece}}</span>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+<form class="form w-25 m-auto row" action="/guess" method="post">
+    <input class="form-control-input col-10" name="guess" placeholder="Guess a word..." />
+    <input type="submit" class="col-2 btn btn-primary" value="Guess" />
+</form>
+{% endif %}
 {% endblock %}
