@@ -14,3 +14,7 @@ def index():
     board = session.get('board', default=boggle_game.make_board())
     session['board'] = board
     return render_template('index.html', board=board)
+
+@app.post('/guess')
+def guess():
+    pass
