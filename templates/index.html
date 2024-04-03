@@ -2,6 +2,17 @@
 {% block content %}
 {% if board %}
 <h1>Flask Boggle</h1>
+
+<div>
+    <span>Current Score: </span>
+    <span id="current_score">0</span>
+</div>
+
+<div>
+    <span>Time Remaining: </span>
+    <span id="time_remaining">10</span>
+</div>
+
 <div class="container w-25 mt-5">
     {% for row in board %}
     <div class="row">
@@ -15,7 +26,7 @@
 </div>
 <form id="guess_form" action="/api/guess" method="post" class="form w-25 m-auto row">
     <input class="form-control-input col-10" id="guess_input" name="guess" placeholder="Guess a word..." />
-    <input type="submit" class="col-2 btn btn-primary" value="Guess" />
+    <input id="submit_button" type="submit" class="col-2 btn btn-primary" value="Guess" />
 </form>
 {% endif %}
 {% endblock %}
