@@ -1,6 +1,10 @@
 // const BASE_URL = 'http://127.0.0.1:5000/' // localhost URL
 const BASE_URL = 'https://cautious-succotash-x5rwp6qwxpx7hpvp7-5000.app.github.dev/' // codespace URL
 
+/**
+ * Replaces the #error paragraph text with the given message
+ * @param {*} msg the message with which to populate the <p> 
+ */
 const displayError = (msg) => {
     $('#error').text(msg);
 }
