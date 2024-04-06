@@ -11,6 +11,8 @@ app.secret_key = str(uuid4())
 
 @app.get('/')
 def index():
+    "Initializes the page with a board for the session."
+
     board = session.get('board', default=boggle_game.make_board())
     session['board'] = board
     return render_template('index.html', board=board)
@@ -18,6 +20,8 @@ def index():
 
 @app.post('/api/guess')
 def guess():
+    "Takes a guess (str) from a JSON request and returns the boggle result."
+
     attempted_guess = request.json.get('guess', '')
 
     # if the value isn't there, return a data validation error DTO
@@ -55,6 +59,7 @@ def guess():
 
 @app.post('/api/record')
 def record():
+    "Accepts the given game_score (str -> int) and adds it to the list of games in this session. Returns the highest score and total number of games."
 
     game_score = int(request.json.get('score', '0'))
 
