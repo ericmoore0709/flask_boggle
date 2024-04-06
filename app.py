@@ -35,10 +35,45 @@ def guess():
             'message': "Board not found."
         })
 
-    result = boggle_game.check_valid_word(board, attempted_guess)
+    result = ''
+    previous_guesses = session.get('previous_guesses', [])
+    if attempted_guess in previous_guesses:
+        result = 'already-used'
+    else:
+        result = boggle_game.check_valid_word(board, attempted_guess)
+        previous_guesses.append(attempted_guess)
+        session['previous_guesses'] = previous_guesses
 
     return jsonify({
         'status': 200,
         'message': 'Here is the result.',
-        'result': result
+        'data': {
+            'result': result
+        }
+    })
+
+
+@app.post('/api/record')
+def record():
+
+    game_score = int(request.json.get('score', '0'))
+
+    if not game_score:
+        return jsonify({
+            'status': 400,
+            'message': '\'score\' (above 0) is required.'
+        })
+
+    # log score and increment game count
+    games = session.get('games', [])
+    games.append(game_score)
+    session['games'] = games
+
+    return jsonify({
+        'status': 201,
+        'message': 'score logged.',
+        'data': {
+            'high_score': max(games),
+            'total_games': len(games)
+        }
     })
